@@ -166,6 +166,8 @@ return [
          * Package Service Providers...
          */
 
+        App\Providers\MailerLiteServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
