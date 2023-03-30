@@ -26,6 +26,9 @@ class ApiKeyController extends Controller
 
     /**
      * validate and save API Key
+     * 
+     * Note: I am using a maillite base url here because i cannot find a validate endpoint
+     * on mailerlite API docs
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -37,7 +40,7 @@ class ApiKeyController extends Controller
         ]);
 
        try {
-        $response = Http::get(config('services.maillite.url'));
+        $response = Http::get(config('services.mailerlite.url'));
 
         if ($response->status() == 200) {
             Account::firstOrCreate([])->update(['api_key' => Crypt::encryptString($request->key)]);

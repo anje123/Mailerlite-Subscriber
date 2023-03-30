@@ -4,13 +4,14 @@ This project adds a subscriber management system to an existing web application,
 
 
 # The following features were added 
-- Create new subscriber by accessing the URL /subscriber/create
-- Update an existing subscriber by accessing the URL /subscriber/edit
+- Create new subscriber by accessing the PATH /subscriber/create
+- Update an existing subscriber by accessing the PATH /subscriber/edit
 - Delete an existing subscriber from the subscriber page
-- View all subscribers by accessing the URL /subscriber
+- View all subscribers by accessing the PATH /subscriber
 - A request class to handle validations
 - a middleware that checks if a key exists in the database before accessing other routes
 - Encryption of Mailerlite Api key, as storing a raw key can be very unsafe
+- Validate and Save api key by accessing PATH /key/save
 
 
 ## Some Subscriber Management System Technical integration Details:
