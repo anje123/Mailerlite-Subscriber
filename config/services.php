@@ -30,4 +30,7 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+     'maillite' => [
+       'url' => env('MAILERLITE_URL', 'https://api.mailerlite.com/api/v2/'),
+     ],
 ];
