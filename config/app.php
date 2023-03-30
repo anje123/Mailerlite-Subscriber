@@ -167,6 +167,7 @@ return [
          */
 
         App\Providers\MailerLiteServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
 
         /*
          * Application Service Providers...

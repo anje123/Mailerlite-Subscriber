@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\MailerRepositoryInterface;
 use App\Http\Requests\StoreSubscriberRequest;
 use App\Http\Requests\UpdateSubscriberRequest;
 use Exception;
-use MailerLiteApi\MailerLite;
 use Illuminate\Support\Facades\Log;
 
 class SubscriberController extends Controller
 {
-    protected $mailerLite;
+    private MailerRepositoryInterface $mailerRepository;
 
-    public function __construct(MailerLite $mailerLite) {
-       $this->mailerLite =  $mailerLite;
+    public function __construct(MailerRepositoryInterface $mailerRepository) 
+    {
+        $this->mailerRepository = $mailerRepository;
     }
 
     /**
@@ -24,7 +25,7 @@ class SubscriberController extends Controller
     public function index()
     {
         try {
-            $response = $this->mailerLite->subscribers()->get();
+            $response = $this->mailerRepository->getSubscribers(); 
 
         } catch (Exception $e) {
             Log::error($e);
@@ -59,7 +60,8 @@ class SubscriberController extends Controller
     public function store(StoreSubscriberRequest $request)
     {
         try {
-            $response = $this->mailerLite->subscribers()->create($request->input());
+           
+            $response = $this->mailerRepository->createSubscriber($request->input()); 
 
             if ($response->has('error')) {
                 return back()->with('invalid', 'Error creating subscriber: ' . $response->getBody());
@@ -83,8 +85,9 @@ class SubscriberController extends Controller
      */
     public function edit(int $id)
     {
-        $subscriber = $this->mailerLite->subscribers()->find($id);
-        return view('subscriber.edit', $subscriber->toArray());
+        $response = $this->mailerRepository->getSubscriber($id); 
+        
+        return view('subscriber.edit', $response->toArray());
     }
 
     /**
@@ -99,7 +102,7 @@ class SubscriberController extends Controller
     public function update(UpdateSubscriberRequest $request, int $id)
     {
         try {
-          $response = $this->mailerLite->subscribers()->update($id, $request->input());
+          $response = $this->mailerRepository->updateSubscriber($id, $request->input()); 
 
           if ($response->has('error')) {
             return back()->with('invalid', 'Error updating subscriber: ' . $response->getBody());
@@ -124,8 +127,7 @@ class SubscriberController extends Controller
     public function destroy(int $id)
     {
         try {
-            $response = $this->mailerLite->subscribers()->delete($id);
-
+            $response = $this->mailerRepository->deleteSubscriber($id);
 
             if ($response->has('error')) {
                 return back()->with('invalid', 'Error deleting subscriber: ' . $response->getBody());

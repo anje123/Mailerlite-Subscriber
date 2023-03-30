@@ -16,7 +16,7 @@ class MailerLiteServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(MailerLite::class, function ($app) {
+        $this->app->bind(MailerLite::class, function ($app) {
             try {
                 if(Account::exists()) { 
                     $apiKey = Crypt::decryptString(Account::first()->api_key);
