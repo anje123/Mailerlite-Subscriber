@@ -55,6 +55,8 @@
 $(document).ready(function() {
     // datatable implementation
     $('#subscriberTable').DataTable({
+        processing: true,
+        serverSide: true,
         data: response.data,
         columns: [
             { 
